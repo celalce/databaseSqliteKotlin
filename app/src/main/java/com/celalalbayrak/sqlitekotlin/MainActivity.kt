@@ -24,9 +24,10 @@ class MainActivity : AppCompatActivity() {
 
 
             }
-        val context = this
+            val context = this
             var db = DatabaseHelper(context)
-            binding.btnkaydet.setOnClickListener {
+
+        binding.btnkaydet.setOnClickListener {
                 var etadsoyad = binding.etadsoyad.text.toString()
                 var etyas = binding.etyas.text.toString()
                 if (etadsoyad.isNotEmpty() && etyas.isNotEmpty()) {
@@ -36,5 +37,30 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext,"lütfen Boş alanları doldurunuz", Toast.LENGTH_LONG).show()
                 }
         }
+
+        // verileri okumak için
+        binding.btnoku.setOnClickListener {
+            var data = db.readData()
+            binding.tvsonuc.text = ""
+            for (i in 0 until data.size){
+                binding.tvsonuc.append(data.get(i).id.toString()+" "
+                +data.get(i).adsoyad+ " "
+                +data .get(i).yasi+ "\n")
+            }
+        }
+
+        //verileri günceleme
+        binding.btnguncelle.setOnClickListener {
+            db.updateData()
+            binding.btnoku.performClick()
+        }
+        //verileri silme
+        binding.btnsil.setOnClickListener {
+            db.deleteData()
+            binding.btnoku.performClick()
+
+        }
+
+
     }
 }
